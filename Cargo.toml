@@ -1,0 +1,38 @@
+[package]
+name = "angzarr-prj-event"
+version = "0.1.0"
+edition = "2021"
+description = "Event storage projector for Angzarr — writes events as JSON to SQL (SQLite/Postgres)"
+license = "AGPL-3.0-only"
+repository = "https://github.com/angzarr-io/angzarr-prj-event"
+keywords = ["cqrs", "event-sourcing", "storage", "grpc"]
+categories = ["database"]
+
+[features]
+default = ["sqlite"]
+sqlite = ["sqlx/sqlite", "sea-query/backend-sqlite"]
+postgres = ["sqlx/postgres", "sea-query/backend-postgres"]
+
+[dependencies]
+angzarr-client = { path = "../../client-rust/main" }
+
+prost = "0.14"
+prost-types = "0.14"
+prost-reflect = { version = "0.16", features = ["serde"] }
+
+tonic = { version = "0.14", features = ["tls-ring", "transport"] }
+tonic-prost = "0.14.5"
+
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls"] }
+sea-query = { version = "0.32", features = ["derive"] }
+sea-query-binder = "0.7"
+
+serde_json = "1"
+hex = "0.4"
+chrono = "0.4"
+tracing = "0.1"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "test-util"] }
